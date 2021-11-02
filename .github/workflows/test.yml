@@ -15,6 +15,5 @@ jobs:
       - name: Install dependencies with pipenv
         run: |
           pip install pipenv
-      - run: pipenv run flake8
       - run: pipenv run mypy
       - run: pipenv run swap.py
