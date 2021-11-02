@@ -1,18 +1,14 @@
-name: Test
-
 on: [push, pull_request]
-
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # in this example, there is a newer version already installed, 3.7.7, so the older version will be downloaded
+        python-version: ['3.5', '3.6', '3.7.4', '3.8']
     steps:
-      - uses: actions/checkout@v2
-      - name: setup python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-      
-      - name: Install dependencies with pipenv
-        run: |
-          pip install pipenv
-      - run: python run swap.py
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - run: python swap.py
